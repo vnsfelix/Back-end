@@ -31,12 +31,16 @@ const PI = 3.14;
 // PASCALCASE
 // - Todas as palavras em maiúscula
 
-class UsuarioSistema {
-    constructor(nome, idade) {
-        this.nome = nome;
-        this.idade = idade;
-    }
-}
+// class UsuarioSistema {
+//    constructor(nome, idade) {
+//        this.nome = nome;
+//        this.idade = idade;
+//    }
+// };
 
 
+//___________________________________________
+//SNAKE CASE
+// - Todas as palavras separadas por underline
+// let nome_completo; let idade_usuario; function_calcular_idade
 
