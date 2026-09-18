@@ -22,7 +22,16 @@ console.log(saudacao)
 // typeof
 // o typeof serve para verificar o tipo de dado de uma variável
 
-let nomeDois = "Felix"
 
-let soma = 10 + 5;
-console.log(soma)
+// Boolean (Verdadeiro e Falso)
+// Um boolean pode ter aoenas dois valores: true(Verdadeiro) e false(Falso)
+
+let maiorDeIdade = true
+let menorDeIdade = false
+
+console.log(maiorDeIdade) // Exibe True
+console.log(menorDeIdade) // Exibe False
+
+let idade = 20
+let podeDirigir = idade >= 18
+console.log(podeDirigir)

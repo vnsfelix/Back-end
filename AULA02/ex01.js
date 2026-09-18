@@ -6,4 +6,5 @@ let anoAtual = 2026
 let anoNascimento = 2009
 let idade = anoAtual - anoNascimento
 
-console.log(idade)
+// Template String
+console.log(`Sua idade é:  ${idade} anos.`)
