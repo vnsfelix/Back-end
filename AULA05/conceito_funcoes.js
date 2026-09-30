@@ -69,3 +69,6 @@ function parOuImpar(numero) {
 
 console.log(parOuImpar(5));
 
+// funcition parOuImpar(numero){
+// return numero % 2 === 0 ?"par" :"impar"}
+// console.log(parOuImpar(6))
