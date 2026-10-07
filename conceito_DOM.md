@@ -10,4 +10,4 @@ Isso permite que o JavaScript:
 - Reaja a cliques
 - Crie elementos novos
 
-> O mavegador transforma o HTML em objetos manipuláveis.
+> O navegador transforma o HTML em objetos manipuláveis.
