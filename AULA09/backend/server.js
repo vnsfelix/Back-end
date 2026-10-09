@@ -58,3 +58,21 @@ function sortear(array) {
     // retorna o item sorteado
     return array[i];
 }
+
+// ==============================
+// ROTAS DA API
+// ==============================
+
+// ROTA 1
+app.get("/api/cachorros/aleatorio", (req, res) => {
+// req - request(requisição) - tudo que o cliente envia para o servidor
+// res - response(resposta) - tudo que o servidor envia para o cliente
+
+// pegar todas as fotos de todas as raças
+// object.values pega os valores do objeto
+// flat trasforma tudo em um array só
+const todasAsFotos =  Object.values(cachorros).flat();
+})
+
+// sorteia uma foto aleatória
+const item = sortear(todasAsFotos);
