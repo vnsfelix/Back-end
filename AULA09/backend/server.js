@@ -24,12 +24,12 @@ const cachorros = require("./data/dogs.json");
 // Cria a aplicação Express
 const app = express();
 // Definir a porta onde o servidor ira rodar
-const PORT = 3000;
+const PORT = 3001;
 // Habilitar o uso do CORS na aplicação
 app.use(cors());
 
 // ===============================================
-// SEVIDOR ARQUIVOS ESTÁTICOS
+// SERVIDOR ARQUIVOS ESTÁTICOS
 // ===============================================
 
 // Nós falamos para o Express
@@ -41,7 +41,7 @@ app.use(
     express.static(
         path.join(__dirname, "data/fotos")
     )
-)
+);
 
 // ===============================================
 // FUNÇÕES AUXILIARES
@@ -49,12 +49,7 @@ app.use(
 
 // função que recebe um array e retorna um elemento aleatório dessa lista
 function sortear(array) {
-    // gera um numero aleatório entre 0 e o tamanho do array
-    // array.length - conta quantos itens existem na lista
-    // math.random() - gera um número aleatório entre 0 e 1
-    // math.floor() - tira a parte decimal, arredondando para baixo.
-    const i = Math.floor(Math.random() * array.length);
-    // const i = guarda a posição na variavel i
+    // gera um numero aleatório entre 0 e o tamanho do array        const i = Math.floor(Math.random() * array.length);
     // retorna o item sorteado
     return array[i];
 }
@@ -63,57 +58,59 @@ function sortear(array) {
 // ROTAS DA API
 // ==============================
 
-// ROTA 1
+// ROTA 1 - Cachorro aleatório de qualquer raça
 app.get("/api/cachorros/aleatorio", (req, res) => {
-// req - request(requisição) - tudo que o cliente envia para o servidor
-// res - response(resposta) - tudo que o servidor envia para o cliente
+    // req - request(requisição) - tudo que o cliente envia para o servidor
+    // res - response(resposta) - tudo que o servidor envia para o cliente
 
-// pegar todas as fotos de todas as raças
-// object.values pega os valores do objeto
-// flat trasforma tudo em um array só
-const todasAsFotos =  Object.values(cachorros).flat();
-})
+    // pegar todas as fotos de todas as raças
+    // object.values pega os valores do objeto
+    // flat transforma tudo em um array só
+    const todasAsFotos = Object.values(cachorros).flat();
 
-// sorteia uma foto aleatória
-const item = sortear(todasAsFotos);
+    // sorteia uma foto aleatória
+    const item = sortear(todasAsFotos);
 
-// envia a resposta para o cliente
-res.json({
-    // status da resposta
-    status: "success",
-    // URL da imagem que foi sorteada
-    message: `http://localhost:${PORT}/fotos/${item}`
-});
+    // envia a resposta para o cliente
+    res.json({
+        // status da resposta
+        status: "success",
+        // URL da imagem que foi sorteada
+        message: `http://localhost:${PORT}/fotos/${item}`
+    });
+}); // <--- Chave e parênteses corrigidos aqui!
 
 // ROTA 2 - Cachorro por raça
-// exemplo de acesso:
-// http://localhost:3000/api/cachorros/husky
-
+// exemplo de acesso: http://localhost:3000/api/cachorros/husky
 app.get("/api/cachorros/:raca", (req, res) => {
-    // pega o pareamento da URL (ex: husky)
-    const raca = req.params.raca.toLocaleLowerCase();
-    // params - parametros da URL
-    // .raca - pega o valor do parametro raca
-    // .toLocaleLowerCase() - transforma tudo em minusculo
-    if (!cachorros[raca]) {
-        // cachorro[raca]: procura a raca dentro do objeto "cachorros"
-        // !: se não existir, entra no if
-            // se nao existir, retorna erro 404
-            res.status(404).json({
-                status: "error",
-                message: `A raça "${raca}" não foi encontrada`
-            })
+    // pega o pareamento da URL (ex: husky) e transforma tudo em minúsculo
+    const raca = req.params.raca.toLowerCase();
 
-            //encerra a execução da rota
-            return;
+    // procura a raça dentro do objeto "cachorros"
+    if (!cachorros[raca]) {
+        // se não existir, retorna erro 404 e encerra
+        return res.status(404).json({
+            status: "error",
+            message: `A raça "${raca}" não foi encontrada`
+        }); // <--- Fechamento corrigido aqui!
     }
 
-    //sorteia uma foto da raca solicitada
+    // sorteia uma foto da raça solicitada
     const item = sortear(cachorros[raca]);
 
-    // retorna a reposta em json
+    // retorna a resposta em json
     res.json({
         status: "success",
         message: `http://localhost:${PORT}/fotos/${item}`
-    })
-})
+    });
+});
+
+// ============================
+// Inicia o servidor
+// ============================
+
+// inicia o servidor express
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
+    console.log(`Coloque as fotos manualmente na pasta data/fotos`);
+});
