@@ -76,3 +76,44 @@ const todasAsFotos =  Object.values(cachorros).flat();
 
 // sorteia uma foto aleatória
 const item = sortear(todasAsFotos);
+
+// envia a resposta para o cliente
+res.json({
+    // status da resposta
+    status: "success",
+    // URL da imagem que foi sorteada
+    message: `http://localhost:${PORT}/fotos/${item}`
+});
+
+// ROTA 2 - Cachorro por raça
+// exemplo de acesso:
+// http://localhost:3000/api/cachorros/husky
+
+app.get("/api/cachorros/:raca", (req, res) => {
+    // pega o pareamento da URL (ex: husky)
+    const raca = req.params.raca.toLocaleLowerCase();
+    // params - parametros da URL
+    // .raca - pega o valor do parametro raca
+    // .toLocaleLowerCase() - transforma tudo em minusculo
+    if (!cachorros[raca]) {
+        // cachorro[raca]: procura a raca dentro do objeto "cachorros"
+        // !: se não existir, entra no if
+            // se nao existir, retorna erro 404
+            res.status(404).json({
+                status: "error",
+                message: `A raça "${raca}" não foi encontrada`
+            })
+
+            //encerra a execução da rota
+            return;
+    }
+
+    //sorteia uma foto da raca solicitada
+    const item = sortear(cachorros[raca]);
+
+    // retorna a reposta em json
+    res.json({
+        status: "success",
+        message: `http://localhost:${PORT}/fotos/${item}`
+    })
+})
